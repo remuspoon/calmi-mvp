@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-const CalmiCharacter = ({ condition }) => {
+const CalmiCharacter = ({ response }) => {
     const [imageSrc, setImageSrc] = useState("././Calmi Look Up.png");
 
     useEffect(() => {
-        if (condition) {
+        if (response) {
             setImageSrc("././Calmi Face Forward.png");
         } else {
             setImageSrc("././Calmi Look Up.png");
         }
-    }, [condition]);
+    }, [response]);
 
     return (
         <div className="self-end mr-12">

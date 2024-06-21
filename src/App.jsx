@@ -54,7 +54,7 @@ function App() {
             <GptResponse response={response} />
           </div>
         </div>
-        <CalmiCharacter />
+        <CalmiCharacter response={response} />
       </div>
     </div>
   );
