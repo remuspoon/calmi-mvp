@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-const CalmiCharacter = ({ response }) => {
+const CalmiCharacter = ({ response, isLoading }) => {
     const [imageSrc, setImageSrc] = useState("././Calmi Look Up.png");
 
     useEffect(() => {
         if (response) {
             setImageSrc("././Calmi Face Forward.png");
-        } else {
+        } 
+        else if (isLoading) {
+            setImageSrc("././Calmi Reading.png");
+        }
+        else {
             setImageSrc("././Calmi Look Up.png");
         }
-    }, [response]);
+    }, [response, isLoading]);
 
     return (
         <div className="self-end mr-12">

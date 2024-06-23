@@ -7,9 +7,12 @@ import GptResponse from './Components/gptResponse'; // Corrected to GptResponse 
 function App() {
   const [text, setText] = useState('');
   const [response, setResponse] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // Add a new state for loading
 
   const handleGptResponse = async (text) => {
     try {
+      setIsLoading(true); // Set isLoading to true when making the API request
+
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -33,10 +36,13 @@ function App() {
           max_tokens: 250,
         }),
       });
+
       const data = await response.json();
       setResponse(data.choices[0].message.content);
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setIsLoading(false); // Set isLoading to false after receiving the response
     }
   };
 
@@ -51,10 +57,14 @@ function App() {
           </div>
           <div>
             <JournalForm text={text} setText={setText} handleGptResponse={handleGptResponse} />
-            <GptResponse response={response} />
+            {isLoading ? (
+              <div className="text-center mt-4">Loading...</div> // Display the loading animation when isLoading is true
+            ) : (
+              <GptResponse response={response}/>
+            )}
           </div>
         </div>
-        <CalmiCharacter response={response} />
+        <CalmiCharacter response={response} isLoading={isLoading}/>
       </div>
     </div>
   );
