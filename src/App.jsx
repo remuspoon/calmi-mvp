@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
+import './App.scss';
 import JournalForm from './Components/journalForm';
 import CalmiCharacter from './Components/calmiCharacter';
 import GptResponse from './Components/gptResponse'; // Corrected to GptResponse (Component names should start with a capital letter)
+import LoadingScreen from './Components/loadingScreen';
 
 function App() {
   const [text, setText] = useState('');
@@ -24,7 +25,7 @@ function App() {
           messages: [
             {
               role: "system",
-              content: "You are a therapist with a kind and loving tone. You are reading a journal entry from me and giving me support. In your response, start by highlighting positive aspects of the journal entry, then provide words of encouragement on the negative aspects if there are any, And finish the response by congratulating me for sharing and completing the journal entry. Complete the response in less than 200 words.",
+              content: "You are a therapist robot called Calmi with a kind and loving tone. You are reading a journal entry from me and giving me support. In your response, start by highlighting positive aspects of the journal entry, then provide words of encouragement on the negative aspects if there are any, And finish the response by congratulating me for sharing and completing the journal entry. Complete the response in less than 200 words.",
             },
             {
               role: "user",
@@ -58,7 +59,7 @@ function App() {
           <div>
             <JournalForm text={text} setText={setText} handleGptResponse={handleGptResponse} />
             {isLoading ? (
-              <div className="text-center mt-4">Loading...</div> // Display the loading animation when isLoading is true
+              <LoadingScreen />
             ) : (
               <GptResponse response={response}/>
             )}
