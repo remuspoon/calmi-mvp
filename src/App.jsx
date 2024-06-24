@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.scss';
 import JournalForm from './Components/journalForm';
 import CalmiCharacter from './Components/calmiCharacter';
 import GptResponse from './Components/gptResponse';
 import LoadingScreen from './Components/loadingScreen';
 
-function App() {
+function App({ isSubmitting }) {
   const [text, setText] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [count, setCount] = useState(0); // Using consistent destructuring for state
+  const [chunks, setChunks] = useState([]);
+  const [currentChunkIndex, setCurrentChunkIndex] = useState(0);
+  const [button, setButton] = useState(false);
+
+  useEffect(() => {
+    if (response) {
+      const rand = getRandomInt(2, 3);
+      const splitChunks = splitString(response, rand);
+      setChunks(splitChunks);
+      setCurrentChunkIndex(0);
+    }
+  }, [response]);
 
   const handleClick = () => {
-    setCount(count + 1);
+    setCurrentChunkIndex((prevIndex) => (prevIndex + 1) % chunks.length);
   };
 
   const handleGptResponse = async (text) => {
@@ -49,8 +60,24 @@ function App() {
       console.error('Error:', error);
     } finally {
       setIsLoading(false);
+      setButton(true);
     }
   };
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function splitString(text, rand) {
+    const parts = text.split('.').filter(part => part);
+    const result = [];
+
+    for (let i = 0; i < parts.length; i += rand) {
+      result.push(parts.slice(i, i + rand).join('.') + '.');
+    }
+
+    return result;
+  }
 
   return (
     <div style={{ backgroundImage: "url(/BG2.jpg)" }}>
@@ -66,20 +93,21 @@ function App() {
             {isLoading ? (
               <LoadingScreen />
             ) : (
-              <GptResponse response={response} />
+              <div>
+                <GptResponse response={chunks[currentChunkIndex]} />
+                {button && (
+                  <div className='text-center mt-5'>
+                    <button
+                      type='button'
+                      onClick={handleClick}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
-          </div>
-          <div className='text-center mt-5'> {/* Added className for styling */}
-            <button 
-              type='button' 
-              onClick={handleClick} 
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Next
-            </button>
-          </div>
-          <div className='text-center mt-2'>
-            {count}
           </div>
         </div>
         <CalmiCharacter response={response} isLoading={isLoading} />
