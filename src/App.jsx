@@ -93,19 +93,18 @@ function App({ isSubmitting }) {
             {isLoading ? (
               <LoadingScreen />
             ) : (
-              <div>
+              <div className='relative flex flex-col items-end'>
                 <GptResponse response={chunks[currentChunkIndex]} />
-                {button && (
-                  <div className='text-center mt-5'>
-                    <button
-                      type='button'
-                      onClick={handleClick}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Next
-                    </button>
-                  </div>
-                )}
+              </div>
+            )}
+            {button && (
+              <div className='absolute left-0 right-0 mx-auto w-max mt-5'>
+                <button
+                  type='button'
+                  onClick={handleClick}
+                  className="bg-blue-950 text-white font-medium py-2 px-4 rounded border-blue-950 hover:bg-opacity-0 hover:border-2 hover:border-blue-950 border-2 hover:text-blue-950 duration-200 shadow-lg">
+                  Next
+                </button>
               </div>
             )}
           </div>
