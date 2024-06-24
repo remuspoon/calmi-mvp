@@ -53,7 +53,7 @@ function App() {
         <div></div>
         <div className="flex flex-col justify-top align-middle mt-40 text-white col-span-2">
           <div className='text-center mb-5 font-baloo-chettan-2 font-bold'>
-            <h2 className='text-4xl drop-shadow-lg'>Take 5 minutes and</h2>
+            <h2 className='text-4xl drop-shadow-lg'>Take 2 minutes and</h2>
             <h1 className='text-6xl drop-shadow-lg'>Tell me about your day :)</h1>
           </div>
           <div>
