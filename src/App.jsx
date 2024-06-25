@@ -74,17 +74,17 @@ function App({ isSubmitting }) {
   }
 
   function splitString(text, rand) {
-    const parts = text.split('.').filter(part => part);
+    const parts = text.match(/[^.!?]+[.!?]*/g) || [];
     const result = [];
-    
-
+  
     for (let i = 0; i < parts.length; i += rand) {
-      result.push(parts.slice(i, i + rand).join('.') + '.');
+      result.push(parts.slice(i, i + rand).join('').trim());
       setResponseCount((responseCount) => responseCount + 1);
     }
-
+  
     return result;
   }
+  
 
   return (
     <div style={{ backgroundImage: "url(/BG2.jpg)" }}>
