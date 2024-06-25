@@ -4,6 +4,7 @@ import JournalForm from './Components/journalForm';
 import CalmiCharacter from './Components/calmiCharacter';
 import GptResponse from './Components/gptResponse';
 import LoadingScreen from './Components/loadingScreen';
+import InterestForm from './Components/interestForm';
 
 function App({ isSubmitting }) {
   const [text, setText] = useState('');
@@ -12,6 +13,8 @@ function App({ isSubmitting }) {
   const [chunks, setChunks] = useState([]);
   const [currentChunkIndex, setCurrentChunkIndex] = useState(0);
   const [button, setButton] = useState(false);
+  const [responseCount, setResponseCount] = useState(0);
+  const [buttonCount, setButtonCount] = useState(10);
 
   useEffect(() => {
     if (response) {
@@ -24,6 +27,7 @@ function App({ isSubmitting }) {
 
   const handleClick = () => {
     setCurrentChunkIndex((prevIndex) => (prevIndex + 1) % chunks.length);
+    setButtonCount(buttonCount + 1);
   };
 
   const handleGptResponse = async (text) => {
@@ -61,6 +65,7 @@ function App({ isSubmitting }) {
     } finally {
       setIsLoading(false);
       setButton(true);
+      setButtonCount(0);
     }
   };
 
@@ -71,9 +76,11 @@ function App({ isSubmitting }) {
   function splitString(text, rand) {
     const parts = text.split('.').filter(part => part);
     const result = [];
+    
 
     for (let i = 0; i < parts.length; i += rand) {
       result.push(parts.slice(i, i + rand).join('.') + '.');
+      setResponseCount((responseCount) => responseCount + 1);
     }
 
     return result;
@@ -90,24 +97,31 @@ function App({ isSubmitting }) {
           </div>
           <div>
             <JournalForm text={text} setText={setText} handleGptResponse={handleGptResponse} />
-            {isLoading ? (
-              <LoadingScreen />
-            ) : (
+            {responseCount === buttonCount ? (
+              <InterestForm />
+            ):(
               <div>
-                <GptResponse response={chunks[currentChunkIndex]} />
-                {button && (
-                  <div className='text-center mt-5'>
-                    <button
-                      type='button'
-                      onClick={handleClick}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Next
-                    </button>
+                {isLoading ? (
+                  <LoadingScreen />
+                ) : (
+                  <div>
+                    <GptResponse response={chunks[currentChunkIndex]} />
+                    {button && (
+                      <div className='text-center mt-5'>
+                        <button
+                          type='button'
+                          onClick={handleClick}
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Next
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
             )}
+                
           </div>
         </div>
         <CalmiCharacter response={response} isLoading={isLoading} />
