@@ -29,9 +29,9 @@ const JournalForm = ({ text, setText, handleGptResponse }) => {
     };
 
     return (
-        <div>
+        <div className='md:px-0 px-10'>
             {isFormVisible && (
-                <div className='bg-white text-black rounded-lg shadow-md mt-5 overflow-hidden' style={{ minHeight: '270px' }}>
+                <div className=' md:mb-0 mb-3 bg-white text-blue-950 rounded-lg shadow-md mt-5 overflow-hidden md:min-h-[270px] max-h-[150px] '>
                     <ReactQuill
                         value={text}
                         onChange={handleChange}

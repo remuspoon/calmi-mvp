@@ -16,8 +16,8 @@ const CalmiCharacter = ({ response, isLoading }) => {
     }, [response, isLoading]);
 
     return (
-        <div className="self-end mr-12">
-            <img src={imageSrc} alt="" className='drop-shadow-xl'/>
+        <div className="md:fixed bottom-0 right-10 md:w-1/5 flex w-8/12 ml-20 md:ml-0">
+            <img src={imageSrc} alt="" className="drop-shadow-xl" />
         </div>
     );
 };

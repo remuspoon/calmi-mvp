@@ -1,0 +1,11 @@
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+
+  "hosting": {
+    "site": "undefined",
+
+    "public": "public"
+  }
+}
