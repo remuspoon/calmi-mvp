@@ -5,6 +5,7 @@ import CalmiCharacter from './Components/calmiCharacter';
 import GptResponse from './Components/gptResponse';
 import LoadingScreen from './Components/loadingScreen';
 import InterestForm from './Components/interestForm';
+import { Helmet } from 'react-helmet';
 
 function App({ isSubmitting }) {
   const [text, setText] = useState('');
@@ -83,47 +84,53 @@ function App({ isSubmitting }) {
   
 
   return (
-    <div className=" min-h-screen min-w-screen" style={{ backgroundImage: "url(/BG2.jpg)" }}>
-      <div className='md:grid md:grid-cols-4'>
-        <div></div>
-        <div className="md:flex md:flex-col justify-top align-middle md:py-28 text-white md:col-span-2 pt-20">
-          {responseCount === buttonCount ? (
-            <div></div>
-          ) : (<div className='text-center mb-5 font-baloo-chettan-2-regular font-bold md:px-0 px-6'>
-            <h2 className='md:text-4xl text-3xl drop-shadow-lg md:pb-0 pb-2'>Take 2 minutes and</h2>
-            <h1 className='md:text-6xl text-5xl drop-shadow-lg md:pb-0 pb-2'>Write about your day :)</h1>
-          </div>)
-          }
-          <div>
-            <JournalForm text={text} setText={setText} handleGptResponse={handleGptResponse} />
+    <div>
+      <Helmet>
+        <title>Calmi</title>
+        <meta name='Calmi' content="Your Journaling Companion:)"/>
+      </Helmet>
+      <div className=" min-h-screen min-w-screen" style={{ backgroundImage: "url(/BG2.jpg)" }}>
+        <div className='md:grid md:grid-cols-4'>
+          <div></div>
+          <div className="md:flex md:flex-col justify-top align-middle md:py-28 text-white md:col-span-2 pt-20">
             {responseCount === buttonCount ? (
-              <InterestForm />
-            ):(
-              <div>
-                {isLoading ? (
-                  <LoadingScreen />
-                ) : (
-                  <div>
-                    <GptResponse response={chunks[currentChunkIndex]} />
-                    {button && (
-                      <div className='text-center mt-5'>
-                        <button
-                          type='button'
-                          onClick={handleClick}
-                          className="bg-blue-950  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        >
-                          Next
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-                
+              <div></div>
+            ) : (<div className='text-center mb-5 font-baloo-chettan-2-regular font-bold md:px-0 px-6'>
+              <h2 className='md:text-4xl text-3xl drop-shadow-lg md:pb-0 pb-2'>Take 2 minutes and</h2>
+              <h1 className='md:text-6xl text-5xl drop-shadow-lg md:pb-0 pb-2'>Write about your day :)</h1>
+            </div>)
+            }
+            <div>
+              <JournalForm text={text} setText={setText} handleGptResponse={handleGptResponse} />
+              {responseCount === buttonCount ? (
+                <InterestForm />
+              ):(
+                <div>
+                  {isLoading ? (
+                    <LoadingScreen />
+                  ) : (
+                    <div>
+                      <GptResponse response={chunks[currentChunkIndex]} />
+                      {button && (
+                        <div className='text-center mt-5'>
+                          <button
+                            type='button'
+                            onClick={handleClick}
+                            className="bg-blue-950  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Next
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+                  
+            </div>
           </div>
+          <CalmiCharacter response={response} isLoading={isLoading} />
         </div>
-        <CalmiCharacter response={response} isLoading={isLoading} />
       </div>
     </div>
   );
