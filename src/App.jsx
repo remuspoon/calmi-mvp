@@ -5,7 +5,6 @@ import CalmiCharacter from './Components/calmiCharacter';
 import GptResponse from './Components/gptResponse';
 import LoadingScreen from './Components/loadingScreen';
 import InterestForm from './Components/interestForm';
-import { Helmet } from 'react-helmet';
 
 function App({ isSubmitting }) {
   const [text, setText] = useState('');
@@ -85,15 +84,6 @@ function App({ isSubmitting }) {
 
   return (
     <div className=" min-h-screen min-w-screen" style={{ backgroundImage: "url(/BG2.jpg)" }}>
-      <Helmet>
-        <title>Calmi</title>
-        <meta name="calmi" content="Your Journaling Companion:)"/>
-        <meta property="og:title" content="Calmi" />
-        <meta property="og:description" content="Your Journaling Companion:)" />
-        <meta property="og:image" content="%PUBLIC_URL%/favicon.ico" />
-        <meta property="og:url" content="http://www.calmi.app" />
-        <meta property="og:type" content="website" />
-      </Helmet>
       <div className='md:grid md:grid-cols-4'>
         <div></div>
         <div className="md:flex md:flex-col justify-top align-middle md:py-28 text-white md:col-span-2 pt-20">
