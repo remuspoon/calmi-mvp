@@ -1,7 +1,21 @@
 import React, {useState} from 'react'
 import {db} from "../firebase.js";
+import {
+    FacebookShareButton,
+    FacebookIcon,
+    EmailShareButton,
+    EmailIcon,
+    TwitterShareButton,
+    XIcon,
+    LinkedinShareButton,
+    LinkedinIcon,
+    RedditShareButton,
+    RedditIcon,
+  } from "react-share";
 
 const InterestForm = () => {
+
+    const shareURL = "https://calmi.app"
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -31,7 +45,7 @@ const InterestForm = () => {
     };
 
     return (
-        <form className='flex flex-col items-center drop-shadow-lg font-baloo-chettan-2'
+        <form className='flex flex-col items-center drop-shadow-lg font-baloo-chettan-2 text-blue-950'
         onSubmit={handleSubmit}>
             <div className='text-center mb-5 font-baloo-chettan-2 font-bold'>
                 <h1 className='md:text-5xl text-4xl'>What if your journal could be an active listener? </h1>
@@ -43,11 +57,11 @@ const InterestForm = () => {
                 </div>
             </div>
             {messageSent ? (
-                <h1 className='flex flex-low items-center font-bold text-4x1 mt-8'>Thank you for your response!</h1>
+                <h1 className='flex flex-low items-center font-bold text-4x1 mt-8 text-2xl md:pb-4'>Thank you for your response!</h1>
             ) : (
                 <div>
                     <h1 className="text-center font-bold text-4xl mt-4 text-blue-950">Join the waitlist!</h1>
-                    <div className="flex flex-col items-center mt-4 md:pb-72"> 
+                    <div className="flex flex-col items-center mt-4 md:mb-4"> 
                         <div className="flex flex-row items-center mb-4"> 
                             <input className="rounded border mx-auto block w-64 p-2 text-blue-950" 
                             placeholder="Name"
@@ -69,6 +83,26 @@ const InterestForm = () => {
 
                 </div>
             )}
+            <div className='mt-5'>
+                <h1 className='text-center font-bold text-4xl mt-4 text-white-950'>Share our project!</h1>
+                <div className="flex justify-center items-center space-x-4 flex-wrap mt-4">
+                    <FacebookShareButton url={shareURL}>
+                        <FacebookIcon size={48} round={true} />
+                    </FacebookShareButton>
+                    <TwitterShareButton url={shareURL}>
+                        <XIcon size={48} round={true} />
+                    </TwitterShareButton>
+                    <LinkedinShareButton url={shareURL}>
+                        <LinkedinIcon size={48} round={true} />
+                    </LinkedinShareButton>
+                    <RedditShareButton url={shareURL}>
+                        <RedditIcon size={48} round={true} />
+                    </RedditShareButton>
+                    <EmailShareButton url={shareURL}>
+                        <EmailIcon size={48} round={true} />
+                    </EmailShareButton>
+                </div>
+            </div>
         </form>
     )
 }
